@@ -1,0 +1,34 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content'; // eslint-disable-line import/no-unresolved
+
+import Head from '../../layouts/Head/index.astro';
+import Html from '../../layouts/Html/index.astro';
+import PostLayout from '../../layouts/PostLayout/index.astro';
+
+type Props = { post: CollectionEntry<'post'> };
+
+export const getStaticPaths = async () => {
+  const posts = await getCollection('post');
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+};
+
+const { slug } = Astro.params;
+const { post } = Astro.props;
+
+const { Content } = await post.render();
+const ogImageURL = '/post/' + slug + '/og-image.png';
+---
+
+<Html>
+  <Head
+    title={post.data.title}
+    description={post.data.description}
+    ogImageURL={ogImageURL}
+  />
+  <PostLayout {...post.data} heroImageURL={ogImageURL}>
+    <Content />
+  </PostLayout>
+</Html>

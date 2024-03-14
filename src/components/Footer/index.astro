@@ -1,0 +1,23 @@
+---
+type Props = {
+  title: string;
+  authorURL: string;
+};
+
+const { title, authorURL } = Astro.props;
+---
+
+<footer class="text-xs md:text-sm">
+  <div class="bg-base-900 py-4 text-center text-white md:py-6">
+    &copy; {new Date().getFullYear()}&nbsp;
+    <a
+      class="underline hover:no-underline"
+      href={authorURL}
+      target="_blank"
+      rel="noreferrer"
+    >
+      {title}
+    </a>
+    . All rights reserved.
+  </div>
+</footer>

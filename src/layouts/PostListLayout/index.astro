@@ -1,0 +1,32 @@
+---
+import PostCard from '../../components/PostCard/index.astro';
+
+import type { PostMetadata } from '../../types';
+
+type Props = {
+  tag?: string;
+  postMetadataList: PostMetadata[];
+};
+
+const { tag, postMetadataList } = Astro.props;
+---
+
+<div class="mx-auto max-w-5xl px-4 xl:max-w-6xl xl:px-0">
+  {
+    tag && (
+      <nav class="mb-8 flex gap-1.5 text-sm text-base-700 md:mb-12 lg:text-base">
+        <span>
+          <a href="/" class="underline hover:no-underline">
+            Top
+          </a>
+        </span>
+        <span>&gt;</span>
+        <span>{tag}</span>
+      </nav>
+    )
+  }
+
+  <ul class="flex flex-wrap gap-8 sm:gap-x-4 md:gap-y-12 xl:gap-x-6">
+    {postMetadataList.map(metadata => <PostCard {...metadata} />)}
+  </ul>
+</div>

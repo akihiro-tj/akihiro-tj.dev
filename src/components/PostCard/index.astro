@@ -1,0 +1,37 @@
+---
+import { Image } from 'astro:assets'; // eslint-disable-line import/no-unresolved
+
+import PublishedDate from '../PublishedDate/index.astro';
+
+import type { PostMetadata } from '../../types';
+
+type Props = PostMetadata;
+
+const { title, url, publishedDate, updatedDate } = Astro.props;
+---
+
+<li
+  class="w-full sm:w-[calc(100%_/_2_-_1rem_/_2)] md:w-[calc(100%_/_3_-_1rem_*_2_/_3)] xl:w-[calc(100%_/_3_-_1.5rem_*_2_/_3)] [&_*]:no-underline"
+>
+  <a class="group flex h-full gap-3 sm:flex-col sm:gap-5" href={url}>
+    <Image
+      class="block w-5/12 rounded group-hover:opacity-80 sm:w-full"
+      src={url + '/og-image.png'}
+      alt=""
+      width="1200"
+      height="630"
+    />
+    <div class="flex grow flex-col justify-between overflow-hidden sm:gap-y-3">
+      <h2
+        class="text-lg font-bold leading-tight group-hover:text-base-500 lg:text-xl"
+      >
+        {title}
+      </h2>
+      <PublishedDate
+        publishedDate={publishedDate}
+        updatedDate={updatedDate}
+        breakPoint="lg"
+      />
+    </div>
+  </a>
+</li>

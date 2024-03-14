@@ -1,0 +1,20 @@
+---
+import { getCollection } from 'astro:content'; // eslint-disable-line import/no-unresolved
+
+import { SITE_TITLE, SITE_DESCRIPTION } from '../configs';
+import BaseLayout from '../layouts/BaseLayout/index.astro';
+import Head from '../layouts/Head/index.astro';
+import Html from '../layouts/Html/index.astro';
+import PostListLayout from '../layouts/PostListLayout/index.astro';
+import { extractPostMetadata } from '../libs';
+
+const posts = await getCollection('post');
+const postMetadataList = posts.map(extractPostMetadata);
+---
+
+<Html>
+  <Head title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  <BaseLayout>
+    <PostListLayout postMetadataList={postMetadataList} />
+  </BaseLayout>
+</Html>

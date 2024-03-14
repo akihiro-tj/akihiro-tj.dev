@@ -1,0 +1,52 @@
+---
+import { Image } from 'astro:assets'; // eslint-disable-line import/no-unresolved
+import clsx from 'clsx';
+
+import updateIcon from '../../assets/images/icons/update.svg';
+import FormattedDate from '../FormattedDate/index.astro';
+
+type Props = {
+  publishedDate: Date;
+  updatedDate?: Date;
+  breakPoint: 'md' | 'lg';
+};
+
+const { publishedDate, updatedDate, breakPoint } = Astro.props;
+
+const dates = [
+  { date: publishedDate, icon: undefined },
+  { date: updatedDate, icon: updateIcon },
+];
+---
+
+<div
+  class={clsx('flex justify-end gap-1.5', {
+    'md:gap-2': breakPoint === 'md',
+    'lg:gap-2': breakPoint === 'lg',
+  })}
+>
+  {
+    dates.map(({ date, icon }) =>
+      date ? (
+        <span
+          class={clsx('flex items-center gap-0.5 text-xs text-base-500', {
+            'md:text-sm': breakPoint === 'md',
+            'lg:text-sm': breakPoint === 'lg',
+          })}
+        >
+          {icon && (
+            <Image
+              class={clsx('size-3', {
+                'md:size-3.5': breakPoint === 'md',
+                'lg:size-3.5': breakPoint === 'lg',
+              })}
+              src={icon}
+              alt=""
+            />
+          )}
+          <FormattedDate date={date} />
+        </span>
+      ) : null,
+    )
+  }
+</div>
