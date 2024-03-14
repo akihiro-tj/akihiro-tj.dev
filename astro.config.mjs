@@ -2,6 +2,7 @@ import mdx from '@astrojs/mdx'; // eslint-disable-line import/no-unresolved
 import react from '@astrojs/react'; // eslint-disable-line import/no-unresolved
 import sitemap from '@astrojs/sitemap'; // eslint-disable-line import/no-unresolved
 import tailwind from '@astrojs/tailwind'; // eslint-disable-line import/no-unresolved
+import vercel from '@astrojs/vercel/serverless'; // eslint-disable-line import/no-unresolved
 import { defineConfig } from 'astro/config'; // eslint-disable-line import/no-unresolved
 import remarkToc from 'remark-toc';
 
@@ -15,4 +16,10 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [[remarkToc, { heading: '目次', maxDepth: 3 }]],
   },
+  output: 'server',
+  adapter: vercel({
+    webAnalytics: {
+      enabled: true,
+    },
+  }),
 });
