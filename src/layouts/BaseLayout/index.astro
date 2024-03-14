@@ -1,5 +1,4 @@
 ---
-import SpeedInsights from '@vercel/speed-insights/astro'; // eslint-disable-line import/no-unresolved
 import { getCollection } from 'astro:content'; // eslint-disable-line import/no-unresolved
 
 import Footer from '../../components/Footer/index.astro';
@@ -17,5 +16,4 @@ const tagMetadataList = tags.map(extractTagMetadata);
     <slot />
   </main>
   <Footer title={SITE_TITLE} authorURL={AUTHOR_URL} />
-  <SpeedInsights />
 </body>

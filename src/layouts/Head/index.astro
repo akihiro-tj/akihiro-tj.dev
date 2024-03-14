@@ -1,4 +1,6 @@
 ---
+import SpeedInsights from '@vercel/speed-insights/astro'; // eslint-disable-line import/no-unresolved
+
 import '../../styles/index.css';
 
 type Props = {
@@ -60,11 +62,8 @@ const {
   gtag('config', 'G-HCSEF4XPZP');
 </script>
 
-<!-- Heading anchor -->
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
-/>
+<!-- Vercel Speed Insights -->
+<SpeedInsights />
 
 <!-- Slot -->
 <slot />
