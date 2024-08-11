@@ -7,7 +7,9 @@ export interface Article {
 	title: string;
 	description?: string;
 	publishedDate: Date;
+	publishedDateStr: string;
 	updatedDate?: Date;
+	updatedDateStr?: string;
 	tags?: Tag[];
 	Content: AstroComponentFactory;
 }
