@@ -10,10 +10,19 @@ export const getStaticPaths = (async () => {
 	const articles = await articleRepository.getAll();
 	return articles.map((article) => ({
 		params: { id: article.id },
+		props: { article },
 	}));
 }) satisfies GetStaticPaths;
 
-const { id } = Astro.params;
+const { article } = Astro.props;
+const { Content } = article;
 ---
 
-<Shell>{id}</Shell>
+<Shell>
+  <main>
+    <article class="max-w-4xl mx-auto px-4 prose prose-slate lg:prose-lg">
+      <h1>{article.title}</h1>
+      <Content />
+    </article>
+  </main>
+</Shell>
