@@ -8,7 +8,7 @@ const article = defineCollection({
 });
 
 const tag = defineCollection({
-	type: "data",
+	type: "content",
 	schema: tagFrontmatterSchema,
 });
 
