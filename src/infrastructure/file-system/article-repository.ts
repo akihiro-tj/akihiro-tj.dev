@@ -51,9 +51,13 @@ export class ArticleRepositoryImpl implements ArticleRepository {
 				};
 			},
 		);
-		const articles = await Promise.all(articlePromises);
 
-		return articles;
+		const articles = await Promise.all(articlePromises);
+		const sortedArticles = articles.sort((a, b) => {
+			return a.publishedDate > b.publishedDate ? -1 : 1;
+		});
+
+		return sortedArticles;
 	}
 
 	async getById(id: string) {
