@@ -16,23 +16,31 @@ export class ArticleRepositoryImpl implements ArticleRepository {
 		const articleCollection = await getCollection("article");
 		const tags = await this.tagRepository.getAll();
 
-		const articles: Article[] = articleCollection.map((entry) => {
-			const articleTags = entry.data.tags
-				?.map((tagId: string) => {
-					return tags.find((tag) => tag.id === tagId);
-				})
-				.filter((tag): tag is Tag => !!tag);
+		const articlePromises: Promise<Article>[] = articleCollection.map(
+			async (entry) => {
+				const articleTags = entry.data.tags
+					?.map((tagId: string) => {
+						return tags.find((tag) => tag.id === tagId);
+					})
+					.filter((tag): tag is Tag => !!tag);
 
-			return {
-				id: entry.slug,
-				url: `/article/${entry.slug}`,
-				title: entry.data.title,
-				description: entry.data.description,
-				publishedDate: entry.data.publishedDate,
-				updatedDate: entry.data.updatedDate ?? undefined,
-				tags: articleTags,
-			};
-		});
+				const renderResult = await entry.render();
+				const Content = renderResult.Content;
+
+				return {
+					id: entry.slug,
+					url: `/article/${entry.slug}`,
+					title: entry.data.title,
+					description: entry.data.description,
+					publishedDate: entry.data.publishedDate,
+					updatedDate: entry.data.updatedDate ?? undefined,
+					tags: articleTags,
+					Content,
+				};
+			},
+		);
+		const articles = await Promise.all(articlePromises);
+
 		return articles;
 	}
 

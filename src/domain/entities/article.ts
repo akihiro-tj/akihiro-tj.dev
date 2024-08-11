@@ -1,4 +1,5 @@
 import type { Tag } from "@/domain/entities/tag";
+import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 
 export interface Article {
 	id: string;
@@ -8,4 +9,5 @@ export interface Article {
 	publishedDate: Date;
 	updatedDate?: Date;
 	tags?: Tag[];
+	Content: AstroComponentFactory;
 }
