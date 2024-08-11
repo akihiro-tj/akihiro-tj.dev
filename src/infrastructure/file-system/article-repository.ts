@@ -24,14 +24,12 @@ export class ArticleRepositoryImpl implements ArticleRepository {
 				.filter((tag): tag is Tag => !!tag);
 
 			return {
-				id: entry.id,
-				url: `/article/${entry.id}`,
+				id: entry.slug,
+				url: `/article/${entry.slug}`,
 				title: entry.data.title,
 				description: entry.data.description,
-				publishedDate: new Date(entry.data.publishedDate),
-				updatedDate: entry.data.updatedDate
-					? new Date(entry.data.updatedDate)
-					: undefined,
+				publishedDate: entry.data.publishedDate,
+				updatedDate: entry.data.updatedDate ?? undefined,
 				tags: articleTags,
 			};
 		});

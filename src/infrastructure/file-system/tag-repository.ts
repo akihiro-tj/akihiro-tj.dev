@@ -6,8 +6,8 @@ export class TagRepositoryImpl implements TagRepository {
 	async getAll() {
 		const tagCollection = await getCollection("tag");
 		const tags: Tag[] = tagCollection.map((entry) => ({
-			id: entry.id,
-			url: `/tag/${entry.id}`,
+			id: entry.slug,
+			url: `/tag/${entry.slug}`,
 			name: entry.data.name,
 		}));
 		return tags;
