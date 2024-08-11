@@ -1,0 +1,19 @@
+---
+import type { GetStaticPaths } from "astro";
+import { ArticleRepositoryImpl } from "@/infrastructure/file-system/article-repository";
+import { TagRepositoryImpl } from "@/infrastructure/file-system/tag-repository";
+import Shell from "@/layouts/shell.astro";
+
+export const getStaticPaths = (async () => {
+	const tagRepository = new TagRepositoryImpl();
+	const articleRepository = new ArticleRepositoryImpl(tagRepository);
+	const articles = await articleRepository.getAll();
+	return articles.map((article) => ({
+		params: { id: article.id },
+	}));
+}) satisfies GetStaticPaths;
+
+const { id } = Astro.params;
+---
+
+<Shell>{id}</Shell>
