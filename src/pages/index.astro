@@ -1,16 +1,32 @@
 ---
+import { Separator } from "@/components/separator";
+import { ArticleRepositoryImpl } from "@/infrastructure/file-system/article-repository";
+import { TagRepositoryImpl } from "@/infrastructure/file-system/tag-repository";
+import Shell from "@/layouts/shell.astro";
 import "@/styles/globals.css";
+
+const tagRepository = new TagRepositoryImpl();
+const articleRepository = new ArticleRepositoryImpl(tagRepository);
+const articles = await articleRepository.getAll();
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Shell>
+  <main class="max-w-4xl mx-auto px-4 prose prose-slate lg:prose-lg">
+    <h2>記事一覧</h2>
+    <ul>
+      {articles.map(article => (
+        <li>
+          <span class="flex items-baseline space-x-3">
+            <span class="flex items-center h-5 space-x-3">
+              <time datetime={article.publishedDate.toISOString()}>
+                {article.publishedDateStr}
+              </time>
+              <Separator orientation="vertical" />
+            </span>
+            <a href={article.url}>{article.title}</a>
+          </span>
+        </li>
+      ))}
+    </ul>
+  </main>
+</Shell>
