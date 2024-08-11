@@ -5,6 +5,14 @@ import type { Article } from "@/domain/entities/article";
 import type { TagRepository } from "@/domain/repositories/tag-repository";
 import type { Tag } from "@/domain/entities/tag";
 
+function formatDate(date: Date) {
+	return new Intl.DateTimeFormat("ja-JP", {
+		year: "numeric",
+		month: "2-digit",
+		day: "2-digit",
+	}).format(date);
+}
+
 export class ArticleRepositoryImpl implements ArticleRepository {
 	private tagRepository: TagRepository;
 
@@ -33,15 +41,23 @@ export class ArticleRepositoryImpl implements ArticleRepository {
 					title: entry.data.title,
 					description: entry.data.description,
 					publishedDate: entry.data.publishedDate,
+					publishedDateStr: formatDate(entry.data.publishedDate),
 					updatedDate: entry.data.updatedDate ?? undefined,
+					updateDateStr: entry.data.updatedDate
+						? formatDate(entry.data.updatedDate)
+						: undefined,
 					tags: articleTags,
 					Content,
 				};
 			},
 		);
-		const articles = await Promise.all(articlePromises);
 
-		return articles;
+		const articles = await Promise.all(articlePromises);
+		const sortedArticles = articles.sort((a, b) => {
+			return a.publishedDate > b.publishedDate ? -1 : 1;
+		});
+
+		return sortedArticles;
 	}
 
 	async getById(id: string) {
