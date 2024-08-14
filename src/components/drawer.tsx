@@ -12,8 +12,11 @@ export const Drawer: React.FC = () => {
 	return (
 		<Sheet>
 			<SheetTrigger asChild>
-				<button type="button" className="block size-5">
-					<AlignRight className="size-full" />
+				<button
+					type="button"
+					className="flex items-center justify-center size-10"
+				>
+					<AlignRight className="size-5" />
 				</button>
 			</SheetTrigger>
 			<SheetContent>
