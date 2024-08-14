@@ -1,0 +1,25 @@
+---
+import { Badge } from "@/components/badge";
+import { TagRepositoryImpl } from "@/infrastructure/file-system/tag-repository";
+import Shell from "@/layouts/shell.astro";
+
+const tagRepository = new TagRepositoryImpl();
+const tags = await tagRepository.getAll();
+---
+
+<Shell>
+  <main class="max-w-4xl mx-auto px-4 my-6 lg:my-8 prose-slate">
+    <div class="prose lg:prose-lg">
+      <h2 class="mb-6 lg:mb-8">Tags</h2>
+    </div>
+    <ul class="flex gap-2">
+      {tags.map(tag => (
+        <li>
+          <a href={tag.url} class="block size-full">
+            <Badge variant="outline">{tag.name}</Badge>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </main>
+</Shell>
