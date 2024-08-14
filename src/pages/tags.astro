@@ -1,4 +1,6 @@
 ---
+import { MainColumn } from "@/components/main-column";
+import { Prose } from "@/components/prose";
 import { TagList } from "@/components/tag-list";
 import { TagRepositoryImpl } from "@/infrastructure/file-system/tag-repository";
 import Shell from "@/layouts/shell.astro";
@@ -8,10 +10,10 @@ const tags = await tagRepository.getAll();
 ---
 
 <Shell>
-  <main class="max-w-4xl mx-auto px-4 my-6 lg:my-8 prose-slate">
-    <div class="prose lg:prose-lg">
+  <MainColumn>
+    <Prose>
       <h2 class="mb-6 lg:mb-8">Tags</h2>
-    </div>
+    </Prose>
     <TagList tags={tags} />
-  </main>
+  </MainColumn>
 </Shell>

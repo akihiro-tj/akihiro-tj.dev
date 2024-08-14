@@ -1,5 +1,7 @@
 ---
 import { ArticleList } from "@/components/article-list";
+import { MainColumn } from "@/components/main-column";
+import { Prose } from "@/components/prose";
 import { ArticleRepositoryImpl } from "@/infrastructure/file-system/article-repository";
 import { TagRepositoryImpl } from "@/infrastructure/file-system/tag-repository";
 import Shell from "@/layouts/shell.astro";
@@ -11,8 +13,10 @@ const articles = await articleRepository.getAll();
 ---
 
 <Shell>
-  <main class="max-w-4xl mx-auto px-4 my-6 lg:my-8 prose lg:prose-lg prose-slate">
-    <h2>Articles</h2>
-    <ArticleList articles={articles} />
-  </main>
+  <MainColumn>
+    <Prose>
+      <h2>Articles</h2>
+      <ArticleList articles={articles} />
+    </Prose>
+  </MainColumn>
 </Shell>
