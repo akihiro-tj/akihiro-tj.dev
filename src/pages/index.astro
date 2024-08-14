@@ -1,5 +1,5 @@
 ---
-import { Separator } from "@/components/separator";
+import { ArticleList } from "@/components/article-list";
 import { ArticleRepositoryImpl } from "@/infrastructure/file-system/article-repository";
 import { TagRepositoryImpl } from "@/infrastructure/file-system/tag-repository";
 import Shell from "@/layouts/shell.astro";
@@ -13,20 +13,6 @@ const articles = await articleRepository.getAll();
 <Shell>
   <main class="max-w-4xl mx-auto px-4 my-6 lg:my-8 prose lg:prose-lg prose-slate">
     <h2>Articles</h2>
-    <ul>
-      {articles.map(article => (
-        <li>
-          <span class="flex items-baseline space-x-3">
-            <span class="flex items-center h-5 space-x-3">
-              <time datetime={article.publishedDate.toISOString()}>
-                {article.publishedDateStr}
-              </time>
-              <Separator orientation="vertical" />
-            </span>
-            <a href={article.url}>{article.title}</a>
-          </span>
-        </li>
-      ))}
-    </ul>
+    <ArticleList articles={articles} />
   </main>
 </Shell>
