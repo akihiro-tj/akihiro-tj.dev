@@ -14,6 +14,8 @@
 	"dependencies": {
 		"@astrojs/react": "^3.6.2",
 		"@astrojs/tailwind": "^5.1.0",
+		"@fontsource-variable/inter": "^5.0.20",
+		"@fontsource-variable/noto-sans-jp": "^5.0.20",
 		"@radix-ui/react-dialog": "^1.1.1",
 		"@radix-ui/react-separator": "^1.1.0",
 		"@radix-ui/react-slot": "^1.1.0",
