@@ -4,6 +4,8 @@ import { TagList } from "@/components/tag-list";
 import { ArticleRepositoryImpl } from "@/infrastructure/file-system/article-repository";
 import { TagRepositoryImpl } from "@/infrastructure/file-system/tag-repository";
 import Shell from "@/layouts/shell.astro";
+import { Prose } from "@/components/prose";
+import { MainColumn } from "@/components/main-column";
 
 export const getStaticPaths = (async () => {
 	const tagRepository = new TagRepositoryImpl();
@@ -20,13 +22,13 @@ const { Content } = article;
 ---
 
 <Shell>
-  <main>
-    <article class="max-w-4xl mx-auto px-4 my-8 lg:my-10">
-      <div class="prose lg:prose-lg prose-slate">
-        <h1 class="mb-3 lg:mb-4">{article.title}</h1>
-      </div>
+  <MainColumn>
+    <article>
+      <Prose>
+        <h1 class="mb-4 lg:mb-8">{article.title}</h1>
+      </Prose>
 
-      <div class="flex flex-col gap-1 mb-8 lg:mb-10">
+      <div class="flex flex-col gap-1 mb-12 lg:mb-14">
         <div class="flex gap-2 text-sm">
           <span>
             <time datetime={article.publishedDate.toISOString()}>{article.publishedDateStr}</time>
@@ -42,9 +44,9 @@ const { Content } = article;
         {article.tags && <TagList tags={article.tags} />}
       </div>
 
-      <div class="prose lg:prose-lg prose-slate">
+      <Prose>
         <Content />
-      </div>
+      </Prose>
     </article>
-  </main>
+  </MainColumn>
 </Shell>
