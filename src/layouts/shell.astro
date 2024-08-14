@@ -14,9 +14,11 @@ import "@fontsource-variable/noto-sans-jp";
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro</title>
 	</head>
-  <body>
+  <body class="flex flex-col min-h-screen">
     <Header  />
-    <slot/>
+    <div class="grow">
+      <slot/>
+    </div>
     <Footer />
   </body>
 </html>
