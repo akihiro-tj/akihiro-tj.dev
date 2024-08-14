@@ -1,11 +1,10 @@
 ---
 import { Button } from "@/components/button";
 import { Drawer } from "@/components/drawer";
-import { Separator } from "@/components/separator";
 import { SITE_TITLE, NAV_ITEMS } from "@/constants";
 ---
 
-<header>
+<header class="sticky top-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
   <div class="flex justify-between items-center max-w-5xl mx-auto px-4 py-1.5">
     <a class="text-xl font-semibold lg:text-2xl" href="/">
       {SITE_TITLE}
@@ -23,5 +22,4 @@ import { SITE_TITLE, NAV_ITEMS } from "@/constants";
       <Drawer client:load />
     </div>
   </div>
-  <Separator />
 </header>
