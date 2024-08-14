@@ -11,8 +11,8 @@ const articles = await articleRepository.getAll();
 ---
 
 <Shell>
-  <main class="max-w-4xl mx-auto px-4 prose prose-slate lg:prose-lg">
-    <h2>記事一覧</h2>
+  <main class="max-w-4xl mx-auto px-4 my-6 lg:my-8 prose lg:prose-lg prose-slate">
+    <h2>Articles</h2>
     <ul>
       {articles.map(article => (
         <li>
