@@ -43,7 +43,7 @@ export class ArticleRepositoryImpl implements ArticleRepository {
 					publishedDate: entry.data.publishedDate,
 					publishedDateStr: formatDate(entry.data.publishedDate),
 					updatedDate: entry.data.updatedDate ?? undefined,
-					updateDateStr: entry.data.updatedDate
+					updatedDateStr: entry.data.updatedDate
 						? formatDate(entry.data.updatedDate)
 						: undefined,
 					tags: articleTags,
