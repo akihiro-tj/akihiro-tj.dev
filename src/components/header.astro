@@ -1,18 +1,14 @@
 ---
-import { AlignRight } from "lucide-react";
 import { Button } from "@/components/button";
+import { Drawer } from "@/components/drawer";
 import { Separator } from "@/components/separator";
-
-const NAV_ITEMS = [
-	{ id: "tags", url: "/tags", name: "Tags" },
-	{ id: "tags", url: "/tags", name: "Tags" },
-];
+import { SITE_TITLE, NAV_ITEMS } from "@/constants";
 ---
 
 <header>
   <div class="flex justify-between items-center max-w-5xl mx-auto px-4 py-1.5">
     <a class="text-xl font-semibold lg:text-2xl" href="/">
-      akihiro-tj.dev
+      {SITE_TITLE}
     </a>
     <ul class="hidden md:flex">
       {NAV_ITEMS.map((item) => (
@@ -23,10 +19,8 @@ const NAV_ITEMS = [
         </li>
       ))}
     </ul>
-    <div class="block size-5 md:hidden">
-      <button type="button">
-        <AlignRight className="size-full" />
-      </button>
+    <div class="block md:hidden">
+      <Drawer client:load />
     </div>
   </div>
   <Separator />
