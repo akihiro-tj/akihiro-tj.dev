@@ -6,7 +6,7 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from "@/components/sheet";
-import { NAV_ITEMS, SITE_TITLE } from "@/constants";
+import { NAV_ITEMS, SITE_NAME } from "@/constants";
 
 export const Drawer: React.FC = () => {
 	return (
@@ -21,7 +21,7 @@ export const Drawer: React.FC = () => {
 			</SheetTrigger>
 			<SheetContent>
 				<SheetHeader className="mb-4">
-					<SheetTitle className="text-left">{SITE_TITLE}</SheetTitle>
+					<SheetTitle className="text-left">{SITE_NAME}</SheetTitle>
 				</SheetHeader>
 				<ul>
 					{NAV_ITEMS.map((item) => (
