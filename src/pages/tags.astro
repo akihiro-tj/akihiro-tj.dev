@@ -2,14 +2,21 @@
 import { MainColumn } from "@/components/main-column";
 import { Prose } from "@/components/prose";
 import { TagList } from "@/components/tag-list";
+import { SITE_NAME } from "@/constants";
 import { TagRepositoryImpl } from "@/infrastructure/file-system/tag-repository";
-import Shell from "@/layouts/shell.astro";
+import Shell, { OgType } from "@/layouts/shell.astro";
 
 const tagRepository = new TagRepositoryImpl();
 const tags = await tagRepository.getAll();
+
+const shellProps = {
+	title: `Tags | ${SITE_NAME}`,
+	ogType: OgType.Article,
+	noIndex: true,
+};
 ---
 
-<Shell>
+<Shell {...shellProps}>
   <MainColumn>
     <Prose>
       <h2 class="mb-6 lg:mb-8">Tags</h2>

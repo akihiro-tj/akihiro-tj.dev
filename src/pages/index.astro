@@ -2,17 +2,23 @@
 import { ArticleList } from "@/components/article-list";
 import { MainColumn } from "@/components/main-column";
 import { Prose } from "@/components/prose";
+import { SITE_NAME } from "@/constants";
 import { ArticleRepositoryImpl } from "@/infrastructure/file-system/article-repository";
 import { TagRepositoryImpl } from "@/infrastructure/file-system/tag-repository";
-import Shell from "@/layouts/shell.astro";
+import Shell, { OgType } from "@/layouts/shell.astro";
 import "@/styles/globals.css";
 
 const tagRepository = new TagRepositoryImpl();
 const articleRepository = new ArticleRepositoryImpl(tagRepository);
 const articles = await articleRepository.getAll();
+
+const shellProps = {
+	title: SITE_NAME,
+	ogType: OgType.Blog,
+};
 ---
 
-<Shell>
+<Shell {...shellProps}>
   <MainColumn>
     <Prose>
       <h2>Articles</h2>
