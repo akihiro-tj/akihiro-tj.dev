@@ -44,6 +44,19 @@ const url = new URL(Astro.url.pathname, Astro.site);
     {noIndex && !noFollow && <meta name="robots" content="noindex" />}
     {!noIndex && noFollow && <meta name="robots" content="nofollow" />}
 
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8P5QLKE59Y"></script>
+  <script>
+    // @ts-ignore
+    window.dataLayer = window.dataLayer || [];
+    // @ts-ignore
+    function gtag(){dataLayer.push(arguments);}
+    // @ts-ignore
+    gtag('js', new Date());
+    // @ts-ignore
+    gtag('config', 'G-8P5QLKE59Y');
+  </script>
+
     <ViewTransitions />
 	</head>
 

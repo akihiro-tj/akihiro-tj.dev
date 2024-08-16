@@ -4,7 +4,7 @@ export const Footer: React.FC = () => {
 	return (
 		<footer>
 			<Separator />
-			<small className="block py-4">
+			<small className="flex flex-col gap-1 py-4">
 				<div className="text-center">
 					&copy; 2024 -{" "}
 					<a
@@ -14,6 +14,11 @@ export const Footer: React.FC = () => {
 						rel="noreferrer"
 					>
 						akihiro-tj
+					</a>
+				</div>
+				<div className="text-center">
+					<a className="underline hover:no-underline" href="/privacy-policy">
+						Privacy Policy
 					</a>
 				</div>
 			</small>
