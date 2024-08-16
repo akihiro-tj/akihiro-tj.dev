@@ -39,7 +39,6 @@ export class ArticleRepositoryImpl implements ArticleRepository {
 					id: entry.slug,
 					url: `/article/${entry.slug}`,
 					title: entry.data.title,
-					description: entry.data.description,
 					publishedDate: entry.data.publishedDate,
 					publishedDateStr: formatDate(entry.data.publishedDate),
 					updatedDate: entry.data.updatedDate ?? undefined,

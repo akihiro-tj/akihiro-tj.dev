@@ -3,9 +3,10 @@ import type { GetStaticPaths } from "astro";
 import { TagList } from "@/components/tag-list";
 import { ArticleRepositoryImpl } from "@/infrastructure/file-system/article-repository";
 import { TagRepositoryImpl } from "@/infrastructure/file-system/tag-repository";
-import Shell from "@/layouts/shell.astro";
+import Shell, { OgType } from "@/layouts/shell.astro";
 import { Prose } from "@/components/prose";
 import { MainColumn } from "@/components/main-column";
+import { SITE_NAME } from "@/constants";
 
 export const getStaticPaths = (async () => {
 	const tagRepository = new TagRepositoryImpl();
@@ -19,9 +20,14 @@ export const getStaticPaths = (async () => {
 
 const { article } = Astro.props;
 const { Content } = article;
+
+const shellProps = {
+	title: `${article.title} | ${SITE_NAME}`,
+	ogType: OgType.Article,
+};
 ---
 
-<Shell>
+<Shell {...shellProps}>
   <MainColumn>
     <article>
       <Prose>

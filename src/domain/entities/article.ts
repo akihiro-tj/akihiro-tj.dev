@@ -5,7 +5,6 @@ export interface Article {
 	id: string;
 	url: string;
 	title: string;
-	description?: string;
 	publishedDate: Date;
 	publishedDateStr: string;
 	updatedDate?: Date;

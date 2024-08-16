@@ -2,10 +2,11 @@
 import type { GetStaticPaths } from "astro";
 import { ArticleList } from "@/components/article-list";
 import { TagRepositoryImpl } from "@/infrastructure/file-system/tag-repository";
-import Shell from "@/layouts/shell.astro";
+import Shell, { OgType } from "@/layouts/shell.astro";
 import { ArticleRepositoryImpl } from "@/infrastructure/file-system/article-repository";
 import { Prose } from "@/components/prose";
 import { MainColumn } from "@/components/main-column";
+import { SITE_NAME } from "@/constants";
 
 export const getStaticPaths = (async () => {
 	const tagRepository = new TagRepositoryImpl();
@@ -22,9 +23,15 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { tag, articles } = Astro.props;
+
+const shellProps = {
+	title: `${tag.name} | ${SITE_NAME}`,
+	ogType: OgType.Article,
+	noIndex: true,
+};
 ---
 
-<Shell>
+<Shell {...shellProps}>
   <MainColumn>
     <Prose>
       <h2>{tag.name}</h2>
