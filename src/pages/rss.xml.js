@@ -9,6 +9,7 @@ export async function GET(context) {
 	const articles = await articleRepository.getAll();
 	return rss({
 		title: SITE_NAME,
+		description: "",
 		site: context.site,
 		items: articles.map((article) => ({
 			title: article.title,
