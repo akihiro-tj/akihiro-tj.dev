@@ -1,0 +1,33 @@
+---
+title: Processing
+publishedDate: 2023-04-02
+tags: [hobby]
+---
+import { Image } from "astro:assets";
+import { Skeleton } from "@/components/skeleton";
+import i1 from "@/assets/article/processing-works/i-1.png";
+import i2 from "@/assets/article/processing-works/i-2.gif";
+import i3 from "@/assets/article/processing-works/i-3.gif";
+
+<div className="relative size-fit mx-auto">
+  <Skeleton className="z-0 absolute inset-0 size-full rounded-none" />
+  <Image src={i1} alt="画像1" width="800" className="z-10 relative" />
+</div>
+
+<div className="relative size-fit mx-auto">
+  <Skeleton className="z-0 absolute inset-0 size-full rounded-none" />
+  <Image src={i2} alt="画像2" width="500" className="z-10 relative" />
+</div>
+
+<div className="relative size-fit mx-auto">
+  <Skeleton className="z-0 absolute inset-0 size-full rounded-none" />
+  <Image src={i3} alt="画像3" width="500" className="z-10 relative" />
+</div>
+
+![画像4](@/assets/article/processing-works/i-4-1.png)
+
+![画像5](@/assets/article/processing-works/i-4-2.png)
+
+![画像6](@/assets/article/processing-works/i-4-3.png)
+
+![画像7](@/assets/article/processing-works/i-4-4.png)
