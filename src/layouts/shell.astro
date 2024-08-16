@@ -5,6 +5,23 @@ import { Footer } from "@/components/footer";
 import "@/styles/globals.css";
 import "@fontsource-variable/inter";
 import "@fontsource-variable/noto-sans-jp";
+import { SITE_NAME } from "@/constants";
+
+export const OgType = {
+	Blog: "blog",
+	Article: "article",
+};
+type OgType = (typeof OgType)[keyof typeof OgType];
+
+interface Props {
+	title: string;
+	ogType: OgType;
+	noIndex?: boolean;
+	noFollow?: boolean;
+}
+
+const { title, ogType, noIndex, noFollow } = Astro.props;
+const url = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <html lang="ja">
@@ -13,9 +30,23 @@ import "@fontsource-variable/noto-sans-jp";
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<title>{title}</title>
+
+    <meta property="og:title" content={title} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={url} />
+    <meta property="og:image" content={`${url.origin}/og-image.png`} />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="twitter:card" content="summary" />
+
+    {noIndex && noFollow && <meta name="robots" content="noindex, nofollow" />}
+    {noIndex && !noFollow && <meta name="robots" content="noindex" />}
+    {!noIndex && noFollow && <meta name="robots" content="nofollow" />}
+
     <ViewTransitions />
 	</head>
+
   <body class="flex flex-col min-h-screen">
     <Header  />
     <div class="grow">
