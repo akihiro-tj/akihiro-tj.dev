@@ -1,5 +1,4 @@
 import type { Article } from "@/domain/entities/article";
-import { Separator } from "@/components/separator";
 
 export interface ArticleListProps {
 	articles: Article[];
@@ -7,18 +6,20 @@ export interface ArticleListProps {
 
 export const ArticleList: React.FC<ArticleListProps> = ({ articles }) => {
 	return (
-		<ul>
+		<ul className="flex flex-col gap-5 lg:gap-6">
 			{articles.map((article) => (
 				<li key={article.id}>
-					<span className="flex items-baseline space-x-3">
-						<span className="flex items-center h-5 space-x-3">
-							<time dateTime={article.publishedDate.toISOString()}>
-								{article.publishedDateStr}
-							</time>
-							<Separator orientation="vertical" />
+					<a className="flex flex-col gap-1 group w-fit" href={article.url}>
+						<span className="leading-tight font-semibold text-lg lg:text-xl no-underline group-hover:underline">
+							{article.title}
 						</span>
-						<a href={article.url}>{article.title}</a>
-					</span>
+						<time
+							className="text-sm text-gray-500"
+							dateTime={article.publishedDate.toISOString()}
+						>
+							{article.publishedDateStr}
+						</time>
+					</a>
 				</li>
 			))}
 		</ul>
