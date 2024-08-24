@@ -4,7 +4,7 @@ export const Footer: React.FC = () => {
 	return (
 		<footer>
 			<Separator />
-			<small className="flex flex-col gap-1 py-4">
+			<small className="flex flex-col gap-0.5 py-4">
 				<div className="text-center">
 					&copy; 2024 -{" "}
 					<a
@@ -18,7 +18,7 @@ export const Footer: React.FC = () => {
 				</div>
 				<div className="text-center">
 					<a className="underline hover:no-underline" href="/privacy-policy">
-						Privacy Policy
+						privacy policy
 					</a>
 				</div>
 			</small>
