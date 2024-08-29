@@ -18,7 +18,7 @@ export const Footer: React.FC = () => {
 				</div>
 				<div className="text-center">
 					<a className="underline hover:no-underline" href="/privacy-policy">
-						privacy policy
+						Privacy Policy
 					</a>
 				</div>
 			</small>
