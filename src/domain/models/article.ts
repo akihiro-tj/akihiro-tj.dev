@@ -1,5 +1,5 @@
-import type { Tag } from "@/domain/entities/tag";
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
+import type { Tag } from "@/domain/models/tag";
 
 export interface Article {
 	id: string;
