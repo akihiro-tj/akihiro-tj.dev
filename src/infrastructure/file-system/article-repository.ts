@@ -1,8 +1,8 @@
 // @ts-ignore
 import { getCollection } from "astro:content";
-import type { ArticleRepository } from "@/domain/repositories/article-repository";
+import type { ArticleGateway } from "@/domain/gateways/article";
 import type { Article } from "@/domain/models/article";
-import type { TagRepository } from "@/domain/repositories/tag-repository";
+import type { TagGateway } from "@/domain/gateways/tag";
 import type { Tag } from "@/domain/models/tag";
 
 function formatDate(date: Date) {
@@ -13,10 +13,10 @@ function formatDate(date: Date) {
 	}).format(date);
 }
 
-export class ArticleRepositoryImpl implements ArticleRepository {
-	private tagRepository: TagRepository;
+export class ArticleRepositoryImpl implements ArticleGateway {
+	private tagRepository: TagGateway;
 
-	constructor(tagRepository: TagRepository) {
+	constructor(tagRepository: TagGateway) {
 		this.tagRepository = tagRepository;
 	}
 

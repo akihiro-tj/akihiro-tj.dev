@@ -1,6 +1,6 @@
 import type { Tag } from "@/domain/models/tag";
 
-export interface TagRepository {
+export interface TagGateway {
 	getAll(): Promise<Tag[]>;
 	getById(id: string): Promise<Tag | undefined>;
 }
