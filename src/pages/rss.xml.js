@@ -1,6 +1,6 @@
 import { SITE_NAME } from "@/constants";
-import { ArticleRepositoryImpl } from "@/infrastructure/file-system/article-repository";
-import { TagRepositoryImpl } from "@/infrastructure/file-system/tag-repository";
+import { ArticleRepositoryImpl } from "@/infra/file-system/article-repository";
+import { TagRepositoryImpl } from "@/infra/file-system/tag-repository";
 import rss from "@astrojs/rss";
 
 export async function GET(context) {

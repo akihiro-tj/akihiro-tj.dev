@@ -3,7 +3,7 @@ import { MainColumn } from "@/components/main-column";
 import { Prose } from "@/components/prose";
 import { TagList } from "@/components/tag-list";
 import { SITE_NAME } from "@/constants";
-import { TagRepositoryImpl } from "@/infrastructure/file-system/tag-repository";
+import { TagRepositoryImpl } from "@/infra/file-system/tag-repository";
 import Shell, { OgType } from "@/layouts/shell.astro";
 
 const tagRepository = new TagRepositoryImpl();

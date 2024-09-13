@@ -1,8 +1,8 @@
 ---
 import type { GetStaticPaths } from "astro";
 import { TagList } from "@/components/tag-list";
-import { ArticleRepositoryImpl } from "@/infrastructure/file-system/article-repository";
-import { TagRepositoryImpl } from "@/infrastructure/file-system/tag-repository";
+import { ArticleRepositoryImpl } from "@/infra/file-system/article-repository";
+import { TagRepositoryImpl } from "@/infra/file-system/tag-repository";
 import Shell, { OgType } from "@/layouts/shell.astro";
 import { Prose } from "@/components/prose";
 import { MainColumn } from "@/components/main-column";
