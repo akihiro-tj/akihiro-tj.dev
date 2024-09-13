@@ -33,6 +33,7 @@ const url = new URL(Astro.url.pathname, Astro.site);
 		<title>{title}</title>
 
     <meta property="og:title" content={title} />
+    <meta property="og:description" content="" />
     <meta property="og:type" content={ogType} />
     <meta property="og:url" content={url} />
     <meta property="og:image" content={`${url.origin}/og-image.png`} />
