@@ -1,9 +1,9 @@
 // @ts-ignore
 import { getCollection } from "astro:content";
 import type { ArticleRepository } from "@/domain/repositories/article-repository";
-import type { Article } from "@/domain/entities/article";
+import type { Article } from "@/domain/models/article";
 import type { TagRepository } from "@/domain/repositories/tag-repository";
-import type { Tag } from "@/domain/entities/tag";
+import type { Tag } from "@/domain/models/tag";
 
 function formatDate(date: Date) {
 	return new Intl.DateTimeFormat("ja-JP", {

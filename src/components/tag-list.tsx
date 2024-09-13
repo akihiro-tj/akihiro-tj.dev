@@ -1,6 +1,6 @@
 import type React from "react";
 import { Badge } from "@/components/badge";
-import type { Tag } from "@/domain/entities/tag";
+import type { Tag } from "@/domain/models/tag";
 
 export interface TagListProps {
 	tags: Tag[];

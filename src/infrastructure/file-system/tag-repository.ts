@@ -1,4 +1,4 @@
-import type { Tag } from "@/domain/entities/tag";
+import type { Tag } from "@/domain/models/tag";
 import type { TagRepository } from "@/domain/repositories/tag-repository";
 import { getCollection } from "astro:content";
 

@@ -1,4 +1,4 @@
-import type { Article } from "@/domain/entities/article";
+import type { Article } from "@/domain/models/article";
 
 export interface ArticleRepository {
 	getAll(): Promise<Article[]>;
