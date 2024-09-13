@@ -1,11 +1,11 @@
 import { SITE_NAME } from "@/constants";
-import { ArticleRepositoryImpl } from "@/infrastructure/file-system/article-repository";
-import { TagRepositoryImpl } from "@/infrastructure/file-system/tag-repository";
+import { ArticleRepository } from "@/infra/file-system/article-repository";
+import { TagRepository } from "@/infra/file-system/tag-repository";
 import rss from "@astrojs/rss";
 
 export async function GET(context) {
-	const tagRepository = new TagRepositoryImpl();
-	const articleRepository = new ArticleRepositoryImpl(tagRepository);
+	const tagRepository = new TagRepository();
+	const articleRepository = new ArticleRepository(tagRepository);
 	const articles = await articleRepository.getAll();
 	return rss({
 		title: SITE_NAME,

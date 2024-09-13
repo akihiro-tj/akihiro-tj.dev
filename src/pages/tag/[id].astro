@@ -1,16 +1,16 @@
 ---
 import type { GetStaticPaths } from "astro";
 import { ArticleList } from "@/components/article-list";
-import { TagRepositoryImpl } from "@/infrastructure/file-system/tag-repository";
+import { TagRepository } from "@/infra/file-system/tag-repository";
 import Shell, { OgType } from "@/layouts/shell.astro";
-import { ArticleRepositoryImpl } from "@/infrastructure/file-system/article-repository";
+import { ArticleRepository } from "@/infra/file-system/article-repository";
 import { Prose } from "@/components/prose";
 import { MainColumn } from "@/components/main-column";
 import { SITE_NAME } from "@/constants";
 
 export const getStaticPaths = (async () => {
-	const tagRepository = new TagRepositoryImpl();
-	const articleRepository = new ArticleRepositoryImpl(tagRepository);
+	const tagRepository = new TagRepository();
+	const articleRepository = new ArticleRepository(tagRepository);
 	const tags = await tagRepository.getAll();
 	const promises = tags.map(async (tag) => {
 		const articles = await articleRepository.getByTag(tag.id);

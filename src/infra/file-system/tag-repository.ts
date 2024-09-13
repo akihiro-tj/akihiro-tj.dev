@@ -1,8 +1,8 @@
-import type { Tag } from "@/domain/entities/tag";
-import type { TagRepository } from "@/domain/repositories/tag-repository";
 import { getCollection } from "astro:content";
+import type { Tag } from "@/domain/models/tag";
+import type { TagGateway } from "@/domain/gateways/tag";
 
-export class TagRepositoryImpl implements TagRepository {
+export class TagRepository implements TagGateway {
 	async getAll() {
 		const tagCollection = await getCollection("tag");
 		const tags: Tag[] = tagCollection.map((entry) => ({
