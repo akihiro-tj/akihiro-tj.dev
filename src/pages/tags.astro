@@ -3,10 +3,10 @@ import { MainColumn } from "@/components/main-column";
 import { Prose } from "@/components/prose";
 import { TagList } from "@/components/tag-list";
 import { SITE_NAME } from "@/constants";
-import { TagRepositoryImpl } from "@/infra/file-system/tag-repository";
+import { TagRepository } from "@/infra/file-system/tag-repository";
 import Shell, { OgType } from "@/layouts/shell.astro";
 
-const tagRepository = new TagRepositoryImpl();
+const tagRepository = new TagRepository();
 const tags = await tagRepository.getAll();
 
 const shellProps = {

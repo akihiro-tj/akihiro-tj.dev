@@ -13,7 +13,7 @@ function formatDate(date: Date) {
 	}).format(date);
 }
 
-export class ArticleRepositoryImpl implements ArticleGateway {
+export class ArticleRepository implements ArticleGateway {
 	private tagRepository: TagGateway;
 
 	constructor(tagRepository: TagGateway) {
