@@ -1,7 +1,7 @@
 import { Article } from "@/entities/article";
 import { createMicroCmsClient } from "@/lib/microcms";
 import { articleSchema } from "@/schemas/article";
-import { microCmsContentsSchema } from "@/schemas/micro-cms-contents";
+import { microCmsContentsSchema } from "@/schemas/microcms-contents";
 
 export interface IArticleRepository {
 	find(id: string): Promise<Article>;

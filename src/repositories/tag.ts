@@ -1,6 +1,6 @@
 import { Tag } from "@/entities/tag";
 import { createMicroCmsClient } from "@/lib/microcms";
-import { microCmsContentsSchema } from "@/schemas/micro-cms-contents";
+import { microCmsContentsSchema } from "@/schemas/microcms-contents";
 import { tagSchema } from "@/schemas/tag";
 
 export interface ITagRepository {
