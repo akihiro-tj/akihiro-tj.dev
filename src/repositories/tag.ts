@@ -1,5 +1,7 @@
 import { Tag } from "@/entities/tag";
 import { createMicroCmsClient } from "@/lib/microcms";
+import { microCmsContentsSchema } from "@/schemas/micro-cms-contents";
+import { tagSchema } from "@/schemas/tag";
 
 export interface ITagRepository {
 	find(id: string): Promise<Tag>;
@@ -17,7 +19,8 @@ export class TagRepository implements ITagRepository {
 				fields: ["id", "name"],
 			},
 		});
-		const tag = new Tag(response.id, response.name);
+		const rawTag = tagSchema.parse(response);
+		const tag = new Tag(rawTag);
 		return tag;
 	}
 
@@ -28,9 +31,10 @@ export class TagRepository implements ITagRepository {
 				fields: ["id", "name"],
 			},
 		});
-		// @ts-ignore
-		const tags = response.contents.map((content) => {
-			return new Tag(content.id, content.name);
+		const rawContents = microCmsContentsSchema.parse(response.contents);
+		const tags = rawContents.map((rawContent) => {
+			const rawTag = tagSchema.parse(rawContent);
+			return new Tag(rawTag);
 		});
 		return tags;
 	}

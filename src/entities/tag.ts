@@ -1,9 +1,14 @@
+export interface RawTag {
+	id: string;
+	name: string;
+}
+
 export class Tag {
 	id: string;
 	name: string;
 
-	constructor(id: string, name: string) {
-		this.id = id;
-		this.name = name;
+	constructor(rawData: RawTag) {
+		this.id = rawData.id;
+		this.name = rawData.name;
 	}
 }

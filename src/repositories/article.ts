@@ -1,6 +1,7 @@
 import { Article } from "@/entities/article";
-import { Tag } from "@/entities/tag";
 import { createMicroCmsClient } from "@/lib/microcms";
+import { articleSchema } from "@/schemas/article";
+import { microCmsContentsSchema } from "@/schemas/micro-cms-contents";
 
 export interface IArticleRepository {
 	find(id: string): Promise<Article>;
@@ -18,18 +19,8 @@ export class ArticleRepository implements IArticleRepository {
 				fields: ["id", "publishedAt", "updatedAt", "title", "tags", "content"],
 			},
 		});
-		// @ts-ignore
-		const tags = response.tags.map((tag) => {
-			return new Tag(tag.id, tag.name);
-		});
-		const article = new Article(
-			response.id,
-			response.publishedAt,
-			response.updatedAt,
-			response.title,
-			tags,
-			response.content,
-		);
+		const rawArticle = articleSchema.parse(response);
+		const article = new Article(rawArticle);
 		return article;
 	}
 
@@ -40,23 +31,12 @@ export class ArticleRepository implements IArticleRepository {
 				fields: ["id", "publishedAt", "updatedAt", "title", "tags", "content"],
 			},
 		});
-		const articles = response.contents
-			// @ts-ignore
-			.map((content) => {
-				// @ts-ignore
-				const tags = content.tags.map((tag) => {
-					return new Tag(tag.id, tag.name);
-				});
-				return new Article(
-					content.id,
-					content.publishedAt,
-					content.updatedAt,
-					content.title,
-					tags,
-					content.content,
-				);
+		const rawContents = microCmsContentsSchema.parse(response.contents);
+		const articles = rawContents
+			.map((rawContent) => {
+				const rawArticle = articleSchema.parse(rawContent);
+				return new Article(rawArticle);
 			})
-			// @ts-ignore
 			.sort((a, b) => {
 				return b.publishedAt.getTime() - a.publishedAt.getTime();
 			});
