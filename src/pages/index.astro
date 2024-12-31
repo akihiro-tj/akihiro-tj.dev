@@ -1,7 +1,18 @@
 ---
 import "@/styles/globals.css";
 import Layout from "@/layouts/Layout.astro";
+import { ArticleRepository } from "@/repositories/article";
+
+const articleRepository = new ArticleRepository();
+const articles = await articleRepository.findAll();
 ---
 
 <Layout>
+	<ul>
+    {articles.map((article) => (
+      <li>
+        <a href={`/article/${article.id}/`}>{article.title}</a>
+      </li>
+    ))}
+  </ul>
 </Layout>
