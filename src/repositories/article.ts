@@ -14,6 +14,9 @@ export class ArticleRepository implements IArticleRepository {
 		const response = await this.microCmsClient.get({
 			endpoint: "article",
 			contentId: id,
+			queries: {
+				fields: ["id", "publishedAt", "updatedAt", "title", "tags", "content"],
+			},
 		});
 		// @ts-ignore
 		const tags = response.tags.map((tag) => {
@@ -33,6 +36,9 @@ export class ArticleRepository implements IArticleRepository {
 	async findAll(): Promise<Article[]> {
 		const response = await this.microCmsClient.get({
 			endpoint: "article",
+			queries: {
+				fields: ["id", "publishedAt", "updatedAt", "title", "tags", "content"],
+			},
 		});
 		// @ts-ignore
 		const articles = response.contents.map((content) => {

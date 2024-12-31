@@ -13,6 +13,9 @@ export class TagRepository implements ITagRepository {
 		const response = await this.microCmsClient.get({
 			endpoint: "tag",
 			contentId: id,
+			queries: {
+				fields: ["id", "name"],
+			},
 		});
 		const tag = new Tag(response.id, response.name);
 		return tag;
@@ -21,6 +24,9 @@ export class TagRepository implements ITagRepository {
 	async findAll(): Promise<Tag[]> {
 		const response = await this.microCmsClient.get({
 			endpoint: "tag",
+			queries: {
+				fields: ["id", "name"],
+			},
 		});
 		// @ts-ignore
 		const tags = response.contents.map((content) => {
