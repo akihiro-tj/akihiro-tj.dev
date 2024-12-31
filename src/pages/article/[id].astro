@@ -1,0 +1,24 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { ArticleRepository } from "@/repositories/article";
+
+export async function getStaticPaths() {
+	const articleRepository = new ArticleRepository();
+	const articles = await articleRepository.findAll();
+	const paths = articles.map((article) => ({
+		params: {
+			id: article.id,
+		},
+	}));
+	return paths;
+}
+
+const { id } = Astro.params;
+const articleRepository = new ArticleRepository();
+const article = await articleRepository.find(id);
+---
+
+<Layout>
+  <h1>{article.title}</h1>
+  <div set:html={article.content} />
+</Layout>
