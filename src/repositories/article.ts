@@ -40,21 +40,26 @@ export class ArticleRepository implements IArticleRepository {
 				fields: ["id", "publishedAt", "updatedAt", "title", "tags", "content"],
 			},
 		});
-		// @ts-ignore
-		const articles = response.contents.map((content) => {
+		const articles = response.contents
 			// @ts-ignore
-			const tags = content.tags.map((tag) => {
-				return new Tag(tag.id, tag.name);
+			.map((content) => {
+				// @ts-ignore
+				const tags = content.tags.map((tag) => {
+					return new Tag(tag.id, tag.name);
+				});
+				return new Article(
+					content.id,
+					content.publishedAt,
+					content.updatedAt,
+					content.title,
+					tags,
+					content.content,
+				);
+			})
+			// @ts-ignore
+			.sort((a, b) => {
+				return b.publishedAt.getTime() - a.publishedAt.getTime();
 			});
-			return new Article(
-				content.id,
-				content.publishedAt,
-				content.updatedAt,
-				content.title,
-				tags,
-				content.content,
-			);
-		});
 		return articles;
 	}
 }
