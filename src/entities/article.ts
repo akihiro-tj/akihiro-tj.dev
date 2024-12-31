@@ -1,4 +1,13 @@
-import type { Tag } from "./tag";
+import { type RawTag, Tag } from "./tag";
+
+export interface RawArticle {
+	id: string;
+	publishedAt: string;
+	updatedAt: string;
+	title: string;
+	tags: RawTag[];
+	content: string;
+}
 
 export class Article {
 	id: string;
@@ -8,19 +17,14 @@ export class Article {
 	tags: Tag[];
 	content: string;
 
-	constructor(
-		id: string,
-		publishedAt: string,
-		updatedAt: string,
-		title: string,
-		tags: Tag[],
-		content: string,
-	) {
-		this.id = id;
-		this.publishedAt = new Date(publishedAt);
-		this.updatedAt = new Date(updatedAt);
-		this.title = title;
-		this.tags = tags;
-		this.content = content;
+	constructor(rawData: RawArticle) {
+		this.id = rawData.id;
+		this.publishedAt = new Date(rawData.publishedAt);
+		this.updatedAt = new Date(rawData.updatedAt);
+		this.title = rawData.title;
+		this.tags = rawData.tags.map((rawTag) => {
+			return new Tag(rawTag);
+		});
+		this.content = rawData.content;
 	}
 }
