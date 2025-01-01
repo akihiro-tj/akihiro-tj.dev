@@ -1,9 +1,14 @@
 ---
+import { MainColumn } from "@/components/main-column";
+import { Prose } from "@/components/prose";
+import { TagList } from "@/components/tag-list";
 import { OgType, site } from "@/constant";
 import Layout from "@/layouts/layout.astro";
+import { formatDate } from "@/lib/utils";
 import { ArticleRepository } from "@/repositories/article";
+import type { GetStaticPaths } from "astro";
 
-export async function getStaticPaths() {
+export async function getStaticPaths(): Promise<ReturnType<GetStaticPaths>> {
 	const articleRepository = new ArticleRepository();
 	const articles = await articleRepository.findAll();
 	const paths = articles.map((article) => ({
@@ -16,10 +21,36 @@ export async function getStaticPaths() {
 
 const { id } = Astro.params;
 const articleRepository = new ArticleRepository();
-const article = await articleRepository.find(id);
+const article = await articleRepository.find(String(id));
 ---
 
 <Layout pageTitle={`${article.title} | ${site.title}`} ogType={OgType.Article}>
-  <h1>{article.title}</h1>
-  <div set:html={article.content} />
+  <MainColumn>
+    <article>
+      <Prose>
+        <h1 class="mb-4 lg:mb-8">{article.title}</h1>
+      </Prose>
+
+      <div class="flex flex-col gap-2 mb-12 lg:mb-14">
+        <div class="flex gap-2 text-sm">
+          <span>
+            Published:
+            <time datetime={article.publishedAt.toISOString()}>{formatDate(article.publishedAt)}</time>
+            {article.showUpdatedAt && ","}
+          </span>
+          {article.showUpdatedAt && (
+            <span>
+              Updated:
+              <time datetime={article.updatedAt.toISOString()}>{formatDate(article.updatedAt)}</time>
+            </span>
+          )}
+        </div>
+        <TagList tags={article.tags} />
+      </div>
+
+      <Prose>
+        <div set:html={article.content} />
+      </Prose>
+    </article>
+  </MainColumn>
 </Layout>
