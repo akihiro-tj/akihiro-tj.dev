@@ -16,7 +16,15 @@ export class ArticleRepository implements IArticleRepository {
 			endpoint: "article",
 			contentId: id,
 			queries: {
-				fields: ["id", "publishedAt", "updatedAt", "title", "tags", "content"],
+				fields: [
+					"id",
+					"publishedAt",
+					"updatedAt",
+					"showUpdatedAt",
+					"title",
+					"tags",
+					"content",
+				],
 			},
 		});
 		const rawArticle = articleSchema.parse(response);
@@ -28,7 +36,15 @@ export class ArticleRepository implements IArticleRepository {
 		const response = await this.microCmsClient.get({
 			endpoint: "article",
 			queries: {
-				fields: ["id", "publishedAt", "updatedAt", "title", "tags", "content"],
+				fields: [
+					"id",
+					"publishedAt",
+					"updatedAt",
+					"showUpdatedAt",
+					"title",
+					"tags",
+					"content",
+				],
 			},
 		});
 		const rawContents = microCmsContentsSchema.parse(response.contents);

@@ -4,6 +4,7 @@ export interface RawArticle {
 	id: string;
 	publishedAt: string;
 	updatedAt: string;
+	showUpdatedAt: boolean;
 	title: string;
 	tags: RawTag[];
 	content: string;
@@ -14,6 +15,7 @@ export class Article {
 	url: string;
 	publishedAt: Date;
 	updatedAt: Date;
+	showUpdatedAt: boolean;
 	title: string;
 	tags: Tag[];
 	content: string;
@@ -23,6 +25,7 @@ export class Article {
 		this.url = `/articles/${this.id}/`;
 		this.publishedAt = new Date(rawData.publishedAt);
 		this.updatedAt = new Date(rawData.updatedAt);
+		this.showUpdatedAt = rawData.showUpdatedAt;
 		this.title = rawData.title;
 		this.tags = rawData.tags.map((rawTag) => {
 			return new Tag(rawTag);
