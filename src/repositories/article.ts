@@ -9,6 +9,8 @@ export interface IArticleRepository {
 	findByTag(tagId: string): Promise<Article[]>;
 }
 
+const fields = "id,publishedAt,updatedAt,showUpdatedAt,title,tags,content";
+
 export class ArticleRepository implements IArticleRepository {
 	private microCmsClient = createMicroCmsClient();
 
@@ -17,15 +19,7 @@ export class ArticleRepository implements IArticleRepository {
 			endpoint: "article",
 			contentId,
 			queries: {
-				fields: [
-					"id",
-					"publishedAt",
-					"updatedAt",
-					"showUpdatedAt",
-					"title",
-					"tags",
-					"content",
-				],
+				fields,
 			},
 		});
 		const rawArticle = articleSchema.parse(response);
@@ -37,15 +31,7 @@ export class ArticleRepository implements IArticleRepository {
 		const response = await this.microCmsClient.get({
 			endpoint: "article",
 			queries: {
-				fields: [
-					"id",
-					"publishedAt",
-					"updatedAt",
-					"showUpdatedAt",
-					"title",
-					"tags",
-					"content",
-				],
+				fields,
 			},
 		});
 		const rawContents = microCmsContentsSchema.parse(response.contents);
@@ -65,15 +51,7 @@ export class ArticleRepository implements IArticleRepository {
 			endpoint: "article",
 			queries: {
 				filters: `tags[contains]${tagId}`,
-				fields: [
-					"id",
-					"publishedAt",
-					"updatedAt",
-					"showUpdatedAt",
-					"title",
-					"tags",
-					"content",
-				],
+				fields,
 			},
 		});
 		const rawContents = microCmsContentsSchema.parse(response.contents);
