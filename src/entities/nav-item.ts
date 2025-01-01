@@ -12,7 +12,7 @@ export class NavItem {
 
 	constructor(rawData: RawNavItem) {
 		this.id = rawData.id;
-		this.url = `/${rawData.id}/`;
+		this.url = `/${this.id}/`;
 		this.name = rawData.data.name;
 	}
 }
