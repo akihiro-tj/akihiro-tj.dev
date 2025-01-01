@@ -9,8 +9,10 @@ export interface IArticleRepository {
 	findByTag(tagId: string): Promise<Article[]>;
 }
 
-const fields = "id,publishedAt,updatedAt,showUpdatedAt,title,tags,content";
-const orders = "-publishedAt";
+const commonQueries = {
+	fields: "id,publishedAt,updatedAt,showUpdatedAt,title,tags,content",
+	orders: "-publishedAt",
+};
 
 export class ArticleRepository implements IArticleRepository {
 	private microCmsClient = createMicroCmsClient();
@@ -20,8 +22,7 @@ export class ArticleRepository implements IArticleRepository {
 			endpoint: "article",
 			contentId,
 			queries: {
-				fields,
-				orders,
+				...commonQueries,
 			},
 		});
 		const rawArticle = articleSchema.parse(response);
@@ -33,8 +34,7 @@ export class ArticleRepository implements IArticleRepository {
 		const response = await this.microCmsClient.get({
 			endpoint: "article",
 			queries: {
-				fields,
-				orders,
+				...commonQueries,
 			},
 		});
 		const rawContents = microCmsContentsSchema.parse(response.contents);
@@ -49,9 +49,8 @@ export class ArticleRepository implements IArticleRepository {
 		const response = await this.microCmsClient.get({
 			endpoint: "article",
 			queries: {
+				...commonQueries,
 				filters: `tags[contains]${tagId}`,
-				fields,
-				orders,
 			},
 		});
 		const rawContents = microCmsContentsSchema.parse(response.contents);
