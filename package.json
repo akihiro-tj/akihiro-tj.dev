@@ -6,6 +6,8 @@
 		"dev": "astro dev",
 		"build": "astro build",
 		"preview": "astro preview",
+		"deploy-staging": "node scripts/deploy.js staging",
+		"deploy-prod": "node scripts/deploy.js prod",
 		"astro": "astro",
 		"check": "biome check --write .",
 		"prepare": "husky"
@@ -25,6 +27,7 @@
 		"astro": "^5.1.1",
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",
+		"dotenv": "^16.4.7",
 		"lucide-react": "^0.469.0",
 		"microcms-js-sdk": "^3.1.2",
 		"react": "^19.0.0",
