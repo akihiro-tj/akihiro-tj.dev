@@ -8,6 +8,10 @@ export interface ITagRepository {
 	findAll(): Promise<Tag[]>;
 }
 
+const commonQueries = {
+	fields: "id,name",
+};
+
 export class TagRepository implements ITagRepository {
 	private microCmsClient = createMicroCmsClient();
 
@@ -16,7 +20,7 @@ export class TagRepository implements ITagRepository {
 			endpoint: "tag",
 			contentId,
 			queries: {
-				fields: ["id", "name"],
+				...commonQueries,
 			},
 		});
 		const rawTag = tagSchema.parse(response);
@@ -28,7 +32,7 @@ export class TagRepository implements ITagRepository {
 		const response = await this.microCmsClient.get({
 			endpoint: "tag",
 			queries: {
-				fields: ["id", "name"],
+				...commonQueries,
 			},
 		});
 		const rawContents = microCmsContentsSchema.parse(response.contents);
