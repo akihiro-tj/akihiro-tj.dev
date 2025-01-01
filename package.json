@@ -43,6 +43,6 @@
 		"typescript": "^5.7.2"
 	},
 	"lint-staged": {
-		"*": "biome check && astro check"
+		"*": "biome check . && astro check ./src"
 	}
 }
