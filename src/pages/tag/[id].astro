@@ -1,0 +1,36 @@
+---
+import { ArticleList } from "@/components/article-list";
+import { MainColumn } from "@/components/main-column";
+import { Prose } from "@/components/prose";
+import { OgType, site } from "@/constant";
+import Layout from "@/layouts/layout.astro";
+import { ArticleRepository } from "@/repositories/article";
+import { TagRepository } from "@/repositories/tag";
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths = (async () => {
+	const tagRepository = new TagRepository();
+	const articleRepository = new ArticleRepository();
+	const tags = await tagRepository.findAll();
+	const promises = tags.map(async (tag) => {
+		const articles = await articleRepository.findByTag(tag.id);
+		return {
+			params: { id: tag.id },
+			props: { tag, articles },
+		};
+	});
+	const paths = await Promise.all(promises);
+	return paths;
+}) satisfies GetStaticPaths;
+
+const { tag, articles } = Astro.props;
+---
+
+<Layout pageTitle={`${tag.name} | ${site.title}`} ogType={OgType.Article} noIndex>
+  <MainColumn>
+    <Prose>
+      <h2 class="mb-6 lg:mb-8">Tags > {tag.name}</h2>
+    </Prose>
+    <ArticleList articles={articles} />
+  </MainColumn>
+</Layout>
