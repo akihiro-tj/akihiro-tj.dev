@@ -1,5 +1,5 @@
 import type { Article } from "@/entities/article";
-import { formatDate } from "@/lib/utils";
+import { formatDate } from "@/libs/utils";
 
 export interface ArticleListProps {
 	articles: Article[];
