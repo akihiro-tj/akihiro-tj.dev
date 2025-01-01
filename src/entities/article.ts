@@ -22,7 +22,7 @@ export class Article {
 
 	constructor(rawData: RawArticle) {
 		this.id = rawData.id;
-		this.url = `/articles/${this.id}/`;
+		this.url = `/article/${this.id}/`;
 		this.publishedAt = new Date(rawData.publishedAt);
 		this.updatedAt = new Date(rawData.updatedAt);
 		this.showUpdatedAt = rawData.showUpdatedAt;
