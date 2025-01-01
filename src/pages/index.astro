@@ -1,4 +1,7 @@
 ---
+import { ArticleList } from "@/components/article-list";
+import { MainColumn } from "@/components/main-column";
+import { Prose } from "@/components/prose";
 import { OgType, site } from "@/constant";
 import Layout from "@/layouts/layout.astro";
 import { ArticleRepository } from "@/repositories/article";
@@ -8,11 +11,10 @@ const articles = await articleRepository.findAll();
 ---
 
 <Layout pageTitle={site.title} ogType={OgType.Blog}>
-	<ul>
-    {articles.map((article) => (
-      <li>
-        <a href={`/article/${article.id}/`}>{article.title}</a>
-      </li>
-    ))}
-  </ul>
+  <MainColumn>
+    <Prose>
+      <h2 class="mb-6 lg:mb-8">Articles</h2>
+    </Prose>
+    <ArticleList articles={articles} />
+  </MainColumn>
 </Layout>
