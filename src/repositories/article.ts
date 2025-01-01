@@ -4,7 +4,7 @@ import { articleSchema } from "@/schemas/article";
 import { microCmsContentsSchema } from "@/schemas/microcms-contents";
 
 export interface IArticleRepository {
-	find(id: string): Promise<Article>;
+	find(contentId: string): Promise<Article>;
 	findAll(): Promise<Article[]>;
 	findByTag(tagId: string): Promise<Article[]>;
 }
@@ -12,10 +12,10 @@ export interface IArticleRepository {
 export class ArticleRepository implements IArticleRepository {
 	private microCmsClient = createMicroCmsClient();
 
-	async find(id: string): Promise<Article> {
+	async find(contentId: string): Promise<Article> {
 		const response = await this.microCmsClient.get({
 			endpoint: "article",
-			contentId: id,
+			contentId,
 			queries: {
 				fields: [
 					"id",
