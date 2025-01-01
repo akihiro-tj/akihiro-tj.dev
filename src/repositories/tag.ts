@@ -4,17 +4,17 @@ import { microCmsContentsSchema } from "@/schemas/microcms-contents";
 import { tagSchema } from "@/schemas/tag";
 
 export interface ITagRepository {
-	find(id: string): Promise<Tag>;
+	find(contentId: string): Promise<Tag>;
 	findAll(): Promise<Tag[]>;
 }
 
 export class TagRepository implements ITagRepository {
 	private microCmsClient = createMicroCmsClient();
 
-	async find(id: string): Promise<Tag> {
+	async find(contentId: string): Promise<Tag> {
 		const response = await this.microCmsClient.get({
 			endpoint: "tag",
-			contentId: id,
+			contentId,
 			queries: {
 				fields: ["id", "name"],
 			},
