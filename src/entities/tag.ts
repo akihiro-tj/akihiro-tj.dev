@@ -10,7 +10,7 @@ export class Tag {
 
 	constructor(rawData: RawTag) {
 		this.id = rawData.id;
-		this.url = `/tags/${rawData.id}/`;
+		this.url = `/tag/${this.id}/`;
 		this.name = rawData.name;
 	}
 }

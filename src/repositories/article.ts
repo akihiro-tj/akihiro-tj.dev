@@ -4,27 +4,25 @@ import { articleSchema } from "@/schemas/article";
 import { microCmsContentsSchema } from "@/schemas/microcms-contents";
 
 export interface IArticleRepository {
-	find(id: string): Promise<Article>;
+	find(contentId: string): Promise<Article>;
 	findAll(): Promise<Article[]>;
+	findByTag(tagId: string): Promise<Article[]>;
 }
+
+const commonQueries = {
+	fields: "id,publishedAt,updatedAt,showUpdatedAt,title,tags,content",
+	orders: "-publishedAt",
+};
 
 export class ArticleRepository implements IArticleRepository {
 	private microCmsClient = createMicroCmsClient();
 
-	async find(id: string): Promise<Article> {
+	async find(contentId: string): Promise<Article> {
 		const response = await this.microCmsClient.get({
 			endpoint: "article",
-			contentId: id,
+			contentId,
 			queries: {
-				fields: [
-					"id",
-					"publishedAt",
-					"updatedAt",
-					"showUpdatedAt",
-					"title",
-					"tags",
-					"content",
-				],
+				...commonQueries,
 			},
 		});
 		const rawArticle = articleSchema.parse(response);
@@ -36,26 +34,30 @@ export class ArticleRepository implements IArticleRepository {
 		const response = await this.microCmsClient.get({
 			endpoint: "article",
 			queries: {
-				fields: [
-					"id",
-					"publishedAt",
-					"updatedAt",
-					"showUpdatedAt",
-					"title",
-					"tags",
-					"content",
-				],
+				...commonQueries,
 			},
 		});
 		const rawContents = microCmsContentsSchema.parse(response.contents);
-		const articles = rawContents
-			.map((rawContent) => {
-				const rawArticle = articleSchema.parse(rawContent);
-				return new Article(rawArticle);
-			})
-			.sort((a, b) => {
-				return b.publishedAt.getTime() - a.publishedAt.getTime();
-			});
+		const articles = rawContents.map((rawContent) => {
+			const rawArticle = articleSchema.parse(rawContent);
+			return new Article(rawArticle);
+		});
+		return articles;
+	}
+
+	async findByTag(tagId: string): Promise<Article[]> {
+		const response = await this.microCmsClient.get({
+			endpoint: "article",
+			queries: {
+				...commonQueries,
+				filters: `tags[contains]${tagId}`,
+			},
+		});
+		const rawContents = microCmsContentsSchema.parse(response.contents);
+		const articles = rawContents.map((rawContent) => {
+			const rawArticle = articleSchema.parse(rawContent);
+			return new Article(rawArticle);
+		});
 		return articles;
 	}
 }
