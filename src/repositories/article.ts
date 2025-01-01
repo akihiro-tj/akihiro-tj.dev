@@ -10,6 +10,7 @@ export interface IArticleRepository {
 }
 
 const fields = "id,publishedAt,updatedAt,showUpdatedAt,title,tags,content";
+const orders = "-publishedAt";
 
 export class ArticleRepository implements IArticleRepository {
 	private microCmsClient = createMicroCmsClient();
@@ -20,6 +21,7 @@ export class ArticleRepository implements IArticleRepository {
 			contentId,
 			queries: {
 				fields,
+				orders,
 			},
 		});
 		const rawArticle = articleSchema.parse(response);
@@ -32,17 +34,14 @@ export class ArticleRepository implements IArticleRepository {
 			endpoint: "article",
 			queries: {
 				fields,
+				orders,
 			},
 		});
 		const rawContents = microCmsContentsSchema.parse(response.contents);
-		const articles = rawContents
-			.map((rawContent) => {
-				const rawArticle = articleSchema.parse(rawContent);
-				return new Article(rawArticle);
-			})
-			.sort((a, b) => {
-				return b.publishedAt.getTime() - a.publishedAt.getTime();
-			});
+		const articles = rawContents.map((rawContent) => {
+			const rawArticle = articleSchema.parse(rawContent);
+			return new Article(rawArticle);
+		});
 		return articles;
 	}
 
@@ -52,17 +51,14 @@ export class ArticleRepository implements IArticleRepository {
 			queries: {
 				filters: `tags[contains]${tagId}`,
 				fields,
+				orders,
 			},
 		});
 		const rawContents = microCmsContentsSchema.parse(response.contents);
-		const articles = rawContents
-			.map((rawContent) => {
-				const rawArticle = articleSchema.parse(rawContent);
-				return new Article(rawArticle);
-			})
-			.sort((a, b) => {
-				return b.publishedAt.getTime() - a.publishedAt.getTime();
-			});
+		const articles = rawContents.map((rawContent) => {
+			const rawArticle = articleSchema.parse(rawContent);
+			return new Article(rawArticle);
+		});
 		return articles;
 	}
 }
