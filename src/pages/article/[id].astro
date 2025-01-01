@@ -8,20 +8,17 @@ import { formatDate } from "@/lib/utils";
 import { ArticleRepository } from "@/repositories/article";
 import type { GetStaticPaths } from "astro";
 
-export async function getStaticPaths(): Promise<ReturnType<GetStaticPaths>> {
+export const getStaticPaths = (async () => {
 	const articleRepository = new ArticleRepository();
 	const articles = await articleRepository.findAll();
 	const paths = articles.map((article) => ({
-		params: {
-			id: article.id,
-		},
+		params: { id: article.id },
+		props: { article },
 	}));
 	return paths;
-}
+}) satisfies GetStaticPaths;
 
-const { id } = Astro.params;
-const articleRepository = new ArticleRepository();
-const article = await articleRepository.find(String(id));
+const { article } = Astro.props;
 ---
 
 <Layout pageTitle={`${article.title} | ${site.title}`} ogType={OgType.Article}>
