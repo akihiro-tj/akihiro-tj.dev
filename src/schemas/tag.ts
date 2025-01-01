@@ -1,5 +1,5 @@
 import type { RawTag } from "@/entities/tag";
-import { schemaForType } from "@/lib/zod";
+import { schemaForType } from "@/libs/zod";
 import { z } from "zod";
 
 export const tagSchema = schemaForType<RawTag>()(

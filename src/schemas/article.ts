@@ -1,5 +1,5 @@
 import type { RawArticle } from "@/entities/article";
-import { schemaForType } from "@/lib/zod";
+import { schemaForType } from "@/libs/zod";
 import { z } from "zod";
 import { tagSchema } from "./tag";
 
