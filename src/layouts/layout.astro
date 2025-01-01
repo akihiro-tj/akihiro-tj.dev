@@ -1,23 +1,63 @@
 ---
 import "@/styles/globals.css";
 import { getCollection } from "astro:content";
+import { ClientRouter } from "astro:transitions";
 import { Footer } from "@/components/footer";
 import Header from "@/components/header.astro";
+import { type OgType, site } from "@/constant";
 import { NavItem } from "@/entities/nav-item";
 
 const navItems = (await getCollection("nav")).map(
 	(rawNavItem) => new NavItem(rawNavItem),
 );
+
+interface Props {
+	pageTitle: string;
+	ogType: (typeof OgType)[keyof typeof OgType];
+	noIndex?: boolean;
+	noFollow?: boolean;
+}
+
+const { pageTitle, ogType, noIndex, noFollow } = Astro.props;
+const url = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+<html lang="ja">
+  <head>
+		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>{pageTitle}</title>
+
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={site.description} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={url} />
+    <meta property="og:image" content={`${url.origin}/ogp.png`} />
+    <meta property="og:site_name" content={site.title} />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="twitter:card" content="summary" />
+
+    {noIndex && noFollow && <meta name="robots" content="noindex, nofollow" />}
+    {noIndex && !noFollow && <meta name="robots" content="noindex" />}
+    {!noIndex && noFollow && <meta name="robots" content="nofollow" />}
+
+    <!-- Google tag (gtag.js) -->
+    <script is:inline src="https://www.googletagmanager.com/gtag/js?id=G-8P5QLKE59Y"></script>
+    <script>
+      // @ts-ignore
+      window.dataLayer = window.dataLayer || [];
+      // @ts-ignore
+      function gtag(){dataLayer.push(arguments);}
+      // @ts-ignore
+      gtag('js', new Date());
+      // @ts-ignore
+      gtag('config', 'G-8P5QLKE59Y');
+    </script>
+
+    <ClientRouter />
 	</head>
 
 	<body class="flex flex-col min-h-screen">
