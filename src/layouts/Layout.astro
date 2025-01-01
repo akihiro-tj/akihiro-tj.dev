@@ -1,3 +1,13 @@
+---
+import { getCollection } from "astro:content";
+import Header from "@/components/header.astro";
+import { NavItem } from "@/entities/nav-item";
+
+const navItems = (await getCollection("nav")).map(
+	(rawNavItem) => new NavItem(rawNavItem),
+);
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
@@ -9,6 +19,7 @@
 	</head>
 
 	<body class="flex flex-col min-h-screen">
+    <Header navItems={navItems} />
     <div class="grow">
       <slot/>
     </div>
