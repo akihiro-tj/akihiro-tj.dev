@@ -1,5 +1,5 @@
 import { Tag } from "@/entities/tag";
-import { createMicroCmsClient } from "@/lib/microcms";
+import { createMicroCmsClient } from "@/libs/microcms";
 import { microCmsContentsSchema } from "@/schemas/microcms-contents";
 import { tagSchema } from "@/schemas/tag";
 
