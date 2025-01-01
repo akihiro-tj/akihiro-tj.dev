@@ -6,6 +6,7 @@ import { microCmsContentsSchema } from "@/schemas/microcms-contents";
 export interface IArticleRepository {
 	find(id: string): Promise<Article>;
 	findAll(): Promise<Article[]>;
+	findByTag(tagId: string): Promise<Article[]>;
 }
 
 export class ArticleRepository implements IArticleRepository {
@@ -36,6 +37,34 @@ export class ArticleRepository implements IArticleRepository {
 		const response = await this.microCmsClient.get({
 			endpoint: "article",
 			queries: {
+				fields: [
+					"id",
+					"publishedAt",
+					"updatedAt",
+					"showUpdatedAt",
+					"title",
+					"tags",
+					"content",
+				],
+			},
+		});
+		const rawContents = microCmsContentsSchema.parse(response.contents);
+		const articles = rawContents
+			.map((rawContent) => {
+				const rawArticle = articleSchema.parse(rawContent);
+				return new Article(rawArticle);
+			})
+			.sort((a, b) => {
+				return b.publishedAt.getTime() - a.publishedAt.getTime();
+			});
+		return articles;
+	}
+
+	async findByTag(tagId: string): Promise<Article[]> {
+		const response = await this.microCmsClient.get({
+			endpoint: "article",
+			queries: {
+				filters: `tags[contains]${tagId}`,
 				fields: [
 					"id",
 					"publishedAt",
