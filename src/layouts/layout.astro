@@ -2,16 +2,11 @@
 import "@/styles/globals.css";
 import "@fontsource-variable/inter";
 import "@fontsource-variable/noto-sans-jp";
-import { getCollection } from "astro:content";
 import { ClientRouter } from "astro:transitions";
 import { Footer } from "@/components/footer";
 import Header from "@/components/header.astro";
 import { type OgType, site } from "@/constant";
-import { NavItem } from "@/entities/nav-item";
-
-const navItems = (await getCollection("nav")).map(
-	(rawNavItem) => new NavItem(rawNavItem),
-);
+import { NavRepository } from "@/repositories/nav";
 
 interface Props {
 	pageTitle: string;
@@ -22,6 +17,9 @@ interface Props {
 
 const { pageTitle, ogType, noIndex, noFollow } = Astro.props;
 const url = new URL(Astro.url.pathname, Astro.site);
+
+const navRepository = new NavRepository();
+const navItems = await navRepository.findAll();
 ---
 
 <!doctype html>
