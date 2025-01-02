@@ -2,13 +2,18 @@ import { Tag } from "@/entities/tag";
 import { createMicroCmsClient } from "@/libs/microcms";
 import { microCmsContentsSchema } from "@/schemas/microcms-contents";
 import { tagSchema } from "@/schemas/tag";
+import type { MicroCMSQueries } from "microcms-js-sdk";
 
 export interface ITagRepository {
 	find(contentId: string): Promise<Tag>;
 	findAll(): Promise<Tag[]>;
 }
 
-const commonQueries = {
+const commonQueries: MicroCMSQueries = {
+	filters:
+		import.meta.env.HOSTING_ENVIRONMENT === "production"
+			? "isPublished[equals]true"
+			: "",
 	fields: "id,name",
 };
 

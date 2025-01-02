@@ -2,6 +2,7 @@ import { Article } from "@/entities/article";
 import { createMicroCmsClient } from "@/libs/microcms";
 import { articleSchema } from "@/schemas/article";
 import { microCmsContentsSchema } from "@/schemas/microcms-contents";
+import type { MicroCMSQueries } from "microcms-js-sdk";
 
 export interface IArticleRepository {
 	find(contentId: string): Promise<Article>;
@@ -9,7 +10,11 @@ export interface IArticleRepository {
 	findByTag(tagId: string): Promise<Article[]>;
 }
 
-const commonQueries = {
+const commonQueries: MicroCMSQueries = {
+	filters:
+		import.meta.env.HOSTING_ENVIRONMENT === "production"
+			? "isPublished[equals]true"
+			: "",
 	fields: "id,publishedAt,updatedAt,showUpdatedAt,title,tags,content",
 	orders: "-publishedAt",
 };
@@ -50,7 +55,7 @@ export class ArticleRepository implements IArticleRepository {
 			endpoint: "article",
 			queries: {
 				...commonQueries,
-				filters: `tags[contains]${tagId}`,
+				filters: `${commonQueries.filters ? `${commonQueries.filters}[and]` : ""}tags[contains]${tagId}`,
 			},
 		});
 		const rawContents = microCmsContentsSchema.parse(response.contents);
