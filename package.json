@@ -6,8 +6,7 @@
 		"dev": "astro dev",
 		"build": "astro build",
 		"preview": "astro preview",
-		"deploy-staging": "node scripts/deploy.js staging",
-		"deploy-prod": "node scripts/deploy.js prod",
+		"test": "vitest",
 		"astro": "astro",
 		"check": "biome check --write .",
 		"prepare": "husky"
@@ -43,7 +42,10 @@
 		"@types/react-dom": "^19.0.2",
 		"husky": "^9.1.7",
 		"lint-staged": "^15.3.0",
-		"typescript": "^5.7.2"
+		"typescript": "^5.7.2",
+		"vite": "^6.0.6",
+		"vite-tsconfig-paths": "^5.1.4",
+		"vitest": "^2.1.8"
 	},
 	"lint-staged": {
 		"*": "biome check . && astro check ./src"
