@@ -9,23 +9,32 @@ export interface ITagRepository {
 	findAll(): Promise<Tag[]>;
 }
 
-const commonQueries: MicroCMSQueries = {
-	filters:
-		import.meta.env.HOSTING_ENVIRONMENT === "production"
-			? "isPublished[equals]true"
-			: "",
+const baseQueries: MicroCMSQueries = {
 	fields: "id,name",
+};
+
+const stagingQueries: MicroCMSQueries = {
+	...baseQueries,
+};
+
+const productionQueries: MicroCMSQueries = {
+	...baseQueries,
+	filters: "isPublished[equals]true",
 };
 
 export class TagRepository implements ITagRepository {
 	private microCmsClient = createMicroCmsClient();
+	private baseQueries =
+		import.meta.env.HOSTING_ENVIRONMENT === "production"
+			? productionQueries
+			: stagingQueries;
 
 	async find(contentId: string): Promise<Tag> {
 		const response = await this.microCmsClient.get({
 			endpoint: "tag",
 			contentId,
 			queries: {
-				...commonQueries,
+				...this.baseQueries,
 			},
 		});
 		const rawTag = tagSchema.parse(response);
@@ -37,7 +46,7 @@ export class TagRepository implements ITagRepository {
 		const response = await this.microCmsClient.get({
 			endpoint: "tag",
 			queries: {
-				...commonQueries,
+				...this.baseQueries,
 			},
 		});
 		const rawContents = microCmsContentsSchema.parse(response.contents);

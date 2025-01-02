@@ -10,24 +10,33 @@ export interface IArticleRepository {
 	findByTag(tagId: string): Promise<Article[]>;
 }
 
-const commonQueries: MicroCMSQueries = {
-	filters:
-		import.meta.env.HOSTING_ENVIRONMENT === "production"
-			? "isPublished[equals]true"
-			: "",
+const baseQueries: MicroCMSQueries = {
 	fields: "id,publishedAt,updatedAt,showUpdatedAt,title,tags,content",
 	orders: "-publishedAt",
 };
 
+const stagingQueries: MicroCMSQueries = {
+	...baseQueries,
+};
+
+const productionQueries: MicroCMSQueries = {
+	...baseQueries,
+	filters: "isPublished[equals]true",
+};
+
 export class ArticleRepository implements IArticleRepository {
 	private microCmsClient = createMicroCmsClient();
+	private baseQueries =
+		import.meta.env.HOSTING_ENVIRONMENT === "production"
+			? productionQueries
+			: stagingQueries;
 
 	async find(contentId: string): Promise<Article> {
 		const response = await this.microCmsClient.get({
 			endpoint: "article",
 			contentId,
 			queries: {
-				...commonQueries,
+				...this.baseQueries,
 			},
 		});
 		const rawArticle = articleSchema.parse(response);
@@ -39,7 +48,7 @@ export class ArticleRepository implements IArticleRepository {
 		const response = await this.microCmsClient.get({
 			endpoint: "article",
 			queries: {
-				...commonQueries,
+				...this.baseQueries,
 			},
 		});
 		const rawContents = microCmsContentsSchema.parse(response.contents);
@@ -54,8 +63,8 @@ export class ArticleRepository implements IArticleRepository {
 		const response = await this.microCmsClient.get({
 			endpoint: "article",
 			queries: {
-				...commonQueries,
-				filters: `${commonQueries.filters ? `${commonQueries.filters}[and]` : ""}tags[contains]${tagId}`,
+				...this.baseQueries,
+				filters: `${this.baseQueries.filters ? `${this.baseQueries.filters}[and]` : ""}tags[contains]${tagId}`,
 			},
 		});
 		const rawContents = microCmsContentsSchema.parse(response.contents);
